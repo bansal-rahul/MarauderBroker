@@ -1,7 +1,8 @@
 import React,{Component} from 'react';
-import { View, TouchableWithoutFeedback,StyleSheet,Text } from "react-native";
+import { View, TouchableWithoutFeedback,StyleSheet,Text,TextInput,TouchableOpacity } from "react-native";
 import { Card, Button, FormLabel, FormInput } from "react-native-elements";
-import {Sae} from "react-native-textinput-effects"
+import * as firebase from 'firebase'
+//import {Sae} from "react-native-textinput-effects"
 // import { onSignIn } from "../auth";
 
 const styles = StyleSheet.create({
@@ -12,7 +13,7 @@ const styles = StyleSheet.create({
     },
 
     buttons: {
-        backgroundColor: "whitesmoke"
+        backgroundColor: "white"
     },
 
     formGroup: {
@@ -61,30 +62,25 @@ export default class SignIn extends Component {
 
     render() {
         return (
-            <TouchableWithoutFeedback onPress={() => {DismissKeyboard()}}>
+            <TouchableWithoutFeedback onPress={() => {}}>
                 <View style={styles.container}>
                     <View style={styles.formGroup}>
                         <Text style={styles.title}>Firebase Sample</Text>
-                        <Sae
-                            label={"Email Address"}
+                        <TextInput
+                            placeholder={"Email Address"}
+                            keyboardType={'email-address'}
+                            autoCapitalize={'none'}
                             onChangeText={(email) => this.setState({email})}
-                            keyboardType="email-address"
-                            autoCapitalize="none"
                         />
-                        <Sae
-                            label={"Password"}
+                        <TextInput
+                            placeholder={"Password"}
                             onChangeText={(password) => this.setState({password})}
-                            password={true}
-                            autoCapitalize="none"
                         />
 
                         <View style={styles.submit}>
-                            <Button onPress={()=>{}} style={styles.buttons} textStyle={{fontSize: 18}}>
-                                Sign up
-                            </Button>
-                            <Button onPress={this.login} style={styles.buttons} textStyle={{fontSize: 18}}>
-                                Login
-                            </Button>
+                            <TouchableOpacity onPress={this.login} style={styles.buttons}>
+                                <Text>Login</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                     <View>
