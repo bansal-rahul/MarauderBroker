@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import Notifications from '../components/Notifications'
+import {Text,View,TouchableOpacity} from 'react-native'
+import * as firebase from 'firebase'
 
 const sample = [
     {
@@ -23,9 +25,25 @@ const sample = [
   ]
 
 export default class Home extends Component {
+  async logout() {
+
+    try {
+
+        await firebase.auth().signOut();
+
+    } catch (error) {
+        console.log(error.toString());
+    }
+
+}
     render() {
         return (
+            <View style={{flex:1}}>
             <Notifications notifications={sample} />
+            <TouchableOpacity onPress={this.logout}>
+              <Text>Log Out</Text>
+            </TouchableOpacity> 
+            </View>
         )
     }
 }
