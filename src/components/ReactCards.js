@@ -9,6 +9,8 @@ import {
 } from 'react-native'
 import { Card, ListItem, Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons';
+import * as firebase from 'firebase'
+import Database from "../firebase/database";
 
 const styles = StyleSheet.create({
     container: {
@@ -99,6 +101,16 @@ const styles = StyleSheet.create({
     }
 })
 
+const writeData = async (response) => {
+    const userId = 123;
+    try {
+        await firebase.database().ref('/prop/' + userId).update({
+            response: response
+        });
+    } catch (error) {
+        console.log(error.toString());
+    }
+  }
 
 export default class ReactCards extends Component {
 
@@ -127,8 +139,8 @@ export default class ReactCards extends Component {
                     </Text>
                 </View>
                 <View style={styles.buttonBox}>
-                    <Button buttonStyle={styles.yesButton} title='Yes' />
-                    <Button buttonStyle={styles.noButton} title='No' />
+                    <Button buttonStyle={styles.yesButton} onPress={writeData('yes')} title='Yes' />
+                    <Button buttonStyle={styles.noButton} onPress={writeData('no')} title='No' />
                 </View>
     </Card>
     )

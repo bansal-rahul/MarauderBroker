@@ -12,7 +12,6 @@ import {
   View,
   Navigator
 } from 'react-native';
-import Notifications from './src/components/Notifications'
 import * as firebase from 'firebase'
 import Firebase from './src/firebase/firebase'
 import {SignedOut,SignedIn} from './src/router'

@@ -28,11 +28,21 @@ const sample = [
   }
 ]
 
+const getData = () => {
+  const database = firebase.database();
+  const userId = 123;
+  database.ref('/prop/'+userId).once('value').then(function(snapshot) {
+    const brokerName = snapshot.val().broken_name;
+    console.log("Get Log: "+brokerName)  
+  })
+}
+
 export default class Home extends Component {
     render() {
         return (
             <View style={{flex:1}}>
               <ReactCards cards={sample} />
+              <TouchableOpacity onPress={getData()}><Text>Test</Text></TouchableOpacity>
             </View>
         )
     }
