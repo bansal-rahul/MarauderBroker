@@ -1,12 +1,39 @@
 import {StackNavigator} from 'react-navigation'
 import SignIn from '../src/screens/SignIn'
 import Home from '../src/screens/Home'
+import { Image, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import React from 'react';
+import * as firebase from 'firebase'
+
+const logout = async () => {
+
+  try {
+
+      await firebase.auth().signOut();
+
+  } catch (error) {
+      console.log(error.toString());
+  }
+
+}
+
+const styles = StyleSheet.create({
+  logo: {
+    width: 40,
+    height: 40,
+  },
+  logoutButton: {
+    fontSize: 16,
+    color: 'rgb(237,19,46)',
+    marginRight: 8,
+  },
+});
 
 export const SignedOut = StackNavigator({
     SignIn: {
         screen: SignIn,
         navigationOptions: {
-            title: 'Sign In'
+            header: null
         }
     }
 })
@@ -14,8 +41,11 @@ export const SignedOut = StackNavigator({
 export const SignedIn = StackNavigator({
     Home: {
         screen: Home,
+        headerMode: 'float',
         navigationOptions: {
-            ttile: 'Notifications'
+          title: 'Notification panel',
+          headerLeft: <Image style={styles.logo} source={require('./img/logo_small.png')} />,
+          headerRight: <TouchableOpacity onPress={logout} ><Text style={styles.logoutButton}>Log Out</Text></TouchableOpacity> 
         }
     }
 })
