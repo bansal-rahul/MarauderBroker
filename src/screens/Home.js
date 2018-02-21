@@ -1,48 +1,38 @@
 import React, {Component} from 'react'
-import Notifications from '../components/Notifications'
+import ReactCards from '../components/ReactCards'
 import {Text,View,TouchableOpacity} from 'react-native'
 import * as firebase from 'firebase'
 
 const sample = [
-    {
-      property: {
-        address: 'Plot No 25, Echelon Square',
-        details: '3 BHK Apartment'
-      },
-      personName: 'Rahul Bansal',
-      contact: 9999999999,
-      timing: '3 PM'
+  {
+    property: {
+      name: 'Proptiger',
+      address: 'Plot No 25, Echelon Square',
+      base64Icon: 'http://www.getmdl.io/assets/demos/welcome_card.jpg'
     },
-    {
-      property: {
-        address: 'Plot No 25, Echelon Square',
-        details: '3 BHK Apartment'
-      },
-      personName: 'Rahul Bansal',
-      contact: 9999999999,
-      timing: '3 PM'
-    }
-  ]
+    personName: 'Rahul Bansal',
+    contact: 9999999999,
+    startTime: '3 PM',
+    endTime: '4 PM'
+  },
+  {
+    property: {
+      name: 'Proptiger',
+      address: 'Plot No 25, Echelon Square',
+      base64Icon: 'http://www.getmdl.io/assets/demos/welcome_card.jpg'
+    },
+    personName: 'Rahul Bansal',
+    contact: 9999999999,
+    startTime: '3 PM',
+    endTime: '4 PM'
+  }
+]
 
 export default class Home extends Component {
-  async logout() {
-
-    try {
-
-        await firebase.auth().signOut();
-
-    } catch (error) {
-        console.log(error.toString());
-    }
-
-}
     render() {
         return (
             <View style={{flex:1}}>
-            <Notifications notifications={sample} />
-            <TouchableOpacity onPress={this.logout}>
-              <Text>Log Out</Text>
-            </TouchableOpacity> 
+              <ReactCards cards={sample} />
             </View>
         )
     }

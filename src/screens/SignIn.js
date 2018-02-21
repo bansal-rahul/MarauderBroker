@@ -1,42 +1,92 @@
 import React,{Component} from 'react';
-import { View, TouchableWithoutFeedback,StyleSheet,Text,TextInput,TouchableOpacity } from "react-native";
-import { Card, Button, FormLabel, FormInput } from "react-native-elements";
-import * as firebase from 'firebase'
-//import {Sae} from "react-native-textinput-effects"
-// import { onSignIn } from "../auth";
+import { 
+    View, 
+    TouchableWithoutFeedback,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    Image } from "react-native";
+
+import { 
+    Card, 
+    Button, 
+    FormLabel, 
+    FormInput } from "react-native-elements";
+
+import * as firebase from 'firebase';
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#8781bd",
+        backgroundColor: "#FFFFFF",
         paddingTop: 50
     },
-
-    buttons: {
-        backgroundColor: "white"
+    imageContainer: {
+        marginTop: 50,
+        width: '100%',
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-
+    logo: {
+        width: 150,
+        height: 40,
+    },
+    personalInfoContainer: {
+        marginTop: 50,
+        width: '100%',
+        height: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    personalImage: {
+        width: 40,
+        height: 50,
+    },
+    personalInfoText: {
+        fontSize: 18,
+        textAlign: 'center',
+        color: 'rgb(118,118,118)'
+    },
+    lineStyle:{
+        borderBottomColor: 'rgb(209,209,209)',
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        width:'100%',
+        marginTop:100
+      },
     formGroup: {
-        padding: 50
+        marginTop: 10,
+        padding: 20,
     },
-
-    title: {
-        paddingBottom: 16,
-        textAlign: "center",
-        color: "#000",
-        fontSize: 35,
-        fontWeight: "bold",
-        opacity: 0.8,
+    formInputStyle: {
+        margin: 10,
+        marginBottom: 20,
+        fontSize: 14,
+        borderBottomColor: 'rgb(114,114,114)',
+        borderBottomWidth: StyleSheet.hairlineWidth,
     },
-
-    submit: {
-        paddingTop: 30
+    loginContainer: {
+        padding: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-
-    response: {
-        textAlign: "center",
-        paddingTop: 0,
-        padding: 50
+    loginButton: {
+        width: 200,
+        height: 50,
+        backgroundColor: 'rgb(237,19,46)',
+        borderRadius: 5,
+    },
+    loginText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: 'rgb(1,1,1)',
+    },
+    error: {
+        color: 'red',
+        fontSize: 14,
+        fontWeight: '600',
+        textAlign: 'center',
     }
 });
 
@@ -49,10 +99,8 @@ export default class SignIn extends Component {
         }
         this.login = this.login.bind(this)
     }
+
     async login() {
-
-        //DismissKeyboard();
-
         try {
             await firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
         } catch (error) {
@@ -64,27 +112,32 @@ export default class SignIn extends Component {
         return (
             <TouchableWithoutFeedback onPress={() => {}}>
                 <View style={styles.container}>
+                    <View style={styles.imageContainer} >
+                        <Image style={styles.logo} source={require('../img/logo.png')} />
+                    </View>
+                    <View style={styles.personalInfoContainer} >
+                        <Image style={styles.personalImage} source={require('../img/personal_info.png')} />
+                        <Text style={styles.personalInfoText}>Personal Information</Text>
+                    </View>
+                    <View style = {styles.lineStyle} />
                     <View style={styles.formGroup}>
-                        <Text style={styles.title}>Firebase Sample</Text>
                         <TextInput
+                            style={styles.formInputStyle}
                             placeholder={"Email Address"}
                             keyboardType={'email-address'}
                             autoCapitalize={'none'}
                             onChangeText={(email) => this.setState({email})}
                         />
                         <TextInput
+                            style={styles.formInputStyle}
                             placeholder={"Password"}
+                            secureTextEntry={true}
                             onChangeText={(password) => this.setState({password})}
                         />
-
-                        <View style={styles.submit}>
-                            <TouchableOpacity onPress={this.login} style={styles.buttons}>
-                                <Text>Login</Text>
-                            </TouchableOpacity>
+                        <View style={styles.loginContainer}>
+                            <Button buttonStyle={styles.loginButton} title='Login' onPress={this.login} />
                         </View>
-                    </View>
-                    <View>
-                        <Text style={styles.response}>Test</Text>
+                        <Text style={styles.error}>Error</Text>
                     </View>
                 </View>
             </TouchableWithoutFeedback>
