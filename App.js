@@ -23,14 +23,20 @@ const styles = StyleSheet.create({
 
 const sample = [
   {
-    propertyName: '3 BHK Apartment',
-    personName: 'Rahul',
+    property: {
+      address: 'Plot No 25, Echelon Square',
+      details: '3 BHK Apartment'
+    },
+    personName: 'Rahul Bansal',
     contact: 9999999999,
     timing: '3 PM'
   },
   {
-    propertyName: '3 BHK Apartment',
-    personName: 'Rahul',
+    property: {
+      address: 'Plot No 25, Echelon Square',
+      details: '3 BHK Apartment'
+    },
+    personName: 'Rahul Bansal',
     contact: 9999999999,
     timing: '3 PM'
   }
@@ -39,7 +45,6 @@ const sample = [
 export default class App extends Component {
   render() {
     return (
-
         <Notifications notifications={sample} />
     );
   }
