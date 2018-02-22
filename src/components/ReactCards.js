@@ -104,24 +104,33 @@ const styles = StyleSheet.create({
 export default class ReactCards extends Component {
 
     renderCards = ({item}) => {
+        
+        // let temp = null
+        // fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + item.property_address.lat + ',' + item.property_address.lng + '&key=' + 'AIzaSyAyRJty5E79eU-GQ16l2bJ63UOiSoIiZCU')
+        // .then((response) => response.json())
+        // .then((responseJson) => {
+        //     temp = responseJson.results[0].formatted_address
+        //     //console.log(temp)
+        // })
+        
         const {propId} = item
         return (
             <Card containerStyle={styles.container}>
             <View style={styles.property}>
-                    <Text style={styles.propertyName}>{item.property.name}</Text>
-                    <Text style={styles.propertyAddress}>{item.property.address}</Text>
+                    <Text style={styles.propertyName}>{item.propName}</Text>
+                    <Text style={styles.propertyAddress}>{item.propAddress}</Text>
                 </View>
                 <View style = {styles.lineStyle}></View>
 
                 <View style={styles.user}>
-                    <Text style={styles.userName}><Icon name="ios-contact" size={20} color='rgb(0,0,0)' /> {item.personName}</Text>
-                    <Text style={styles.userContact}><Icon name="ios-call" size={20} color='rgb(0,0,0)' /> {item.contact}</Text>
+                    <Text style={styles.userName}><Icon name="ios-contact" size={20} color='rgb(0,0,0)' /> User</Text>
+                    <Text style={styles.userContact}><Icon name="ios-call" size={20} color='rgb(0,0,0)' /> 999999999</Text>
                 </View>
                 <View style = {styles.lineStyle}></View>
                
                <View style={styles.messageBox}>
                     <Text style={styles.message}>
-                        Hi, I would like to visit your property between {item.time.start} - {item.time.end}.
+                        Hi, I would like to visit your property between {item.meet_time} - {item.meet_time}.
                     </Text>
                     <Text style={styles.question}>
                         Are you available at this time ?
@@ -130,12 +139,12 @@ export default class ReactCards extends Component {
                 <View style={styles.buttonBox}>
                     <Button onPress={
                         () => firebase.database().ref("/prop/" + propId).update({
-                            status: 'Yes'
+                            status: 'yes'
                         })
                     } buttonStyle={styles.yesButton} title='Yes' />
                     <Button onPress={
                         () => firebase.database().ref("/prop/" + propId).update({
-                            status: 'No'
+                            status: 'no'
                         })
                     } buttonStyle={styles.noButton} title='No' />
                 </View>
@@ -146,7 +155,11 @@ export default class ReactCards extends Component {
   render() {
         const {cards} = this.props
         return (
-            <FlatList data={cards} renderItem={this.renderCards}/>
+            <FlatList 
+            data={cards} 
+            renderItem={this.renderCards}
+            keyExtractor={i => i.propId}
+            />
           )
     }
 }

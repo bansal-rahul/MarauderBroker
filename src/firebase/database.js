@@ -8,6 +8,7 @@ export default class Database {
         firebase.database().ref(propPath).once('value',(snapshot) => {
             snapshot.forEach((childSnapshot) => {
                 if(propIds.includes(childSnapshot.key)) {
+                    console.log(childSnapshot.key)
                     props.push(childSnapshot.val())
                 }
             })

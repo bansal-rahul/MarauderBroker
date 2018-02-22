@@ -137,7 +137,7 @@ export default class SignIn extends Component {
                         <View style={styles.loginContainer}>
                             <Button buttonStyle={styles.loginButton} title='Login' onPress={this.login} />
                         </View>
-                        <Text style={styles.error}>Error</Text>
+                        <Text style={styles.error}></Text>
                     </View>
                 </View>
             </TouchableWithoutFeedback>

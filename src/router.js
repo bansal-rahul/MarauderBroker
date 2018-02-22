@@ -43,7 +43,7 @@ export const SignedIn = StackNavigator({
         screen: Home,
         headerMode: 'float',
         navigationOptions: {
-          title: 'Notification panel',
+          title: 'Notification Panel',
           headerLeft: <Image style={styles.logo} source={require('./img/logo_small.png')} />,
           headerRight: <TouchableOpacity onPress={logout} ><Text style={styles.logoutButton}>Log Out</Text></TouchableOpacity> 
         }
