@@ -10,20 +10,18 @@ class Database {
         })
     }
 
-    static listenUserMobile() {
+    static populateCards(brokerId) {
 
         let userId = '6108760'
-        let userMobilePath = "/user/" + userId;
+        let brokerCardPath = "/prop/" + userId
 
-        firebase.database().ref(userMobilePath).on('value', (snapshot) => {
+        firebase.database().ref(brokerCardPath).on('value', (snapshot) => {
 
             var brokerName = "";
 
             if (snapshot.val()) {
                 brokerName = snapshot.val().broker_name
             }
-
-            callback(mobile)
         });
     }
 
