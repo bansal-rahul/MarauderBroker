@@ -132,7 +132,7 @@ export default class ReactCards extends Component {
                
                <View style={styles.messageBox}>
                     <Text style={styles.message}>
-                        Hi, I would like to visit your property between {item.startTime} - {item.endTime}.
+                        Hi, I would like to visit your property between {item.time.start} - {item.time.end}.
                     </Text>
                     <Text style={styles.question}>
                         Are you available at this time ?
