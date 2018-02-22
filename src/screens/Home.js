@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import ReactCards from '../components/ReactCards'
 import {Text,View,TouchableOpacity} from 'react-native'
 import * as firebase from 'firebase'
+import Database from '../firebase/database'
 
 const sample = [
   {
@@ -12,8 +13,10 @@ const sample = [
     },
     personName: 'Rahul Bansal',
     contact: 9999999999,
-    startTime: '3 PM',
-    endTime: '4 PM'
+    time: {
+      start: '1 AM',
+      end: '3 PM'
+    }
   },
   {
     property: {
@@ -23,26 +26,44 @@ const sample = [
     },
     personName: 'Rahul Bansal',
     contact: 9999999999,
-    startTime: '3 PM',
-    endTime: '4 PM'
+    time: {
+      start: '10 AM',
+      end: '1 AM'
+    }
   }
 ]
 
-const getData = () => {
-  const database = firebase.database();
-  const userId = 123;
-  database.ref('/prop/'+userId).once('value').then(function(snapshot) {
-    const brokerName = snapshot.val().broken_name;
-    console.log("Get Log: "+brokerName)  
-  })
-}
-
 export default class Home extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      bid:"",
+      requests:[]
+    }
+  }
+  async componentDidMount() {
+    try {
+      let user = await firebase.auth().currentUser
+      Database.getBid(user.uid,(brokerId,propIds) => {
+        Database.getProperties(propIds,(properties) => {
+          this.setState({
+            requests: properties,
+            bid: brokerId
+          })
+        })
+      })
+    }
+    catch (error) {
+      console.log(error.toString())
+    }
+  }
+
     render() {
+      console.log(this.state.bid)
+      console.log(this.state.requests)
         return (
             <View style={{flex:1}}>
-              <ReactCards cards={sample} />
-              <TouchableOpacity onPress={getData()}><Text>Test</Text></TouchableOpacity>
+              <ReactCards cards={this.state.requests} />
             </View>
         )
     }

@@ -1,30 +1,32 @@
 import * as firebase from "firebase";
 
-class Database {
+export default class Database {
 
-    static setResponse(response) {
-        let userMobilePath = "/prop/" + userId;
-
-        return firebase.database().ref(userMobilePath).set({
-            response: response
+    static getProperties(propIds,callback) {
+        let props = []
+        let propPath = '/prop/'
+        firebase.database().ref(propPath).once('value',(snapshot) => {
+            snapshot.forEach((childSnapshot) => {
+                if(propIds.includes(childSnapshot.key)) {
+                    props.push(childSnapshot.val())
+                }
+            })
+            callback(props)
         })
     }
 
-    static populateCards(brokerId) {
-
-        let userId = '6108760'
-        let brokerCardPath = "/prop/" + userId
-
-        firebase.database().ref(brokerCardPath).on('value', (snapshot) => {
-
-            var brokerName = "";
-
-            if (snapshot.val()) {
-                brokerName = snapshot.val().broker_name
+    static getBid(uid,callback) {
+        let bid = ""
+        let pids = []
+        let userPath = '/brokers/' + uid
+        firebase.database().ref(userPath).once('value').then(
+            function(snapshot) {
+                if(snapshot.val()) {
+                bid = snapshot.val().bid 
+                pids = snapshot.val().pid
             }
-        });
+            callback(bid,pids)
+         }
+        )
     }
-
 }
-
-module.exports = Database;
