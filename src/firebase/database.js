@@ -2,14 +2,6 @@ import * as firebase from "firebase";
 
 export default class Database {
 
-    static setResponse(userId,response) {
-        let userPath = "/prop/" + userId;
-
-        return firebase.database().ref(userPath).update({
-            response: response
-        })
-    }
-
     static getProperties(propIds,callback) {
         let props = []
         let propPath = '/prop/'
