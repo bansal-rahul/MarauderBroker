@@ -33,15 +33,6 @@ const sample = [
   }
 ]
 
-const getData = () => {
-  const database = firebase.database();
-  const userId = 123;
-  database.ref('/prop/'+userId).once('value').then(function(snapshot) {
-    const brokerName = snapshot.val().broken_name;
-    console.log("Get Log: "+brokerName)  
-  })
-}
-
 export default class Home extends Component {
   constructor(props) {
     super(props)
@@ -68,10 +59,11 @@ export default class Home extends Component {
   }
 
     render() {
+      console.log(this.state.bid)
+      console.log(this.state.requests)
         return (
             <View style={{flex:1}}>
               <ReactCards cards={this.state.requests} />
-              <TouchableOpacity onPress={getData()}><Text>Test</Text></TouchableOpacity>
             </View>
         )
     }

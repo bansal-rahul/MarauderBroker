@@ -101,23 +101,12 @@ const styles = StyleSheet.create({
     }
 })
 
-const writeData = async (response) => {
-    const userId = 123;
-    try {
-        await firebase.database().ref('/prop/' + userId).update({
-            response: response
-        });
-    } catch (error) {
-        console.log(error.toString());
-    }
-  }
-
 export default class ReactCards extends Component {
 
-    renderCards = ({item}) => (
-
-        <Card
-            containerStyle={styles.container}>
+    renderCards = ({item}) => {
+        const {propId} = item
+        return (
+            <Card containerStyle={styles.container}>
             <View style={styles.property}>
                     <Text style={styles.propertyName}>{item.property.name}</Text>
                     <Text style={styles.propertyAddress}>{item.property.address}</Text>
@@ -139,11 +128,20 @@ export default class ReactCards extends Component {
                     </Text>
                 </View>
                 <View style={styles.buttonBox}>
-                    <Button buttonStyle={styles.yesButton} onPress={writeData('yes')} title='Yes' />
-                    <Button buttonStyle={styles.noButton} onPress={writeData('no')} title='No' />
+                    <Button onPress={
+                        () => firebase.database().ref("/prop/" + propId).update({
+                            status: 'Yes'
+                        })
+                    } buttonStyle={styles.yesButton} title='Yes' />
+                    <Button onPress={
+                        () => firebase.database().ref("/prop/" + propId).update({
+                            status: 'No'
+                        })
+                    } buttonStyle={styles.noButton} title='No' />
                 </View>
-    </Card>
-    )
+            </Card>
+        )
+    }
 
   render() {
         const {cards} = this.props
