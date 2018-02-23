@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     FlatList
 } from 'react-native'
-import { Card, ListItem, Button } from 'react-native-elements'
+import { Card, ListItem, Button, Divider } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase'
 import Database from "../firebase/database";
@@ -36,12 +36,13 @@ const styles = StyleSheet.create({
         borderBottomColor: 'rgb(172,172,172)',
         borderBottomWidth: StyleSheet.hairlineWidth,
         width:'100%',
-        margin:2
+        margin: 2,
       },
       user: {
         padding: 5,
         width: '100%',
         alignItems: 'center',
+        marginBottom: 5,
       },
       userName: {
         fontSize: 16,
@@ -61,6 +62,7 @@ const styles = StyleSheet.create({
       },
       property: {
         marginHorizontal: 5,
+        marginBottom: 5,
         padding: 5,
         width: '100%',
     },
@@ -105,14 +107,6 @@ export default class ReactCards extends Component {
 
     renderCards = ({item}) => {
         
-        // let temp = null
-        // fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + item.property_address.lat + ',' + item.property_address.lng + '&key=' + 'AIzaSyAyRJty5E79eU-GQ16l2bJ63UOiSoIiZCU')
-        // .then((response) => response.json())
-        // .then((responseJson) => {
-        //     temp = responseJson.results[0].formatted_address
-        //     //console.log(temp)
-        // })
-        
         const {propId} = item
         return (
             <Card containerStyle={styles.container}>
@@ -120,17 +114,15 @@ export default class ReactCards extends Component {
                     <Text style={styles.propertyName}>{item.propName}</Text>
                     <Text style={styles.propertyAddress}>{item.propAddress}</Text>
                 </View>
-                <View style = {styles.lineStyle}></View>
-
+                <Divider style={styles.lineStyle} />
                 <View style={styles.user}>
                     <Text style={styles.userName}><Icon name="ios-contact" size={20} color='rgb(0,0,0)' /> User</Text>
                     <Text style={styles.userContact}><Icon name="ios-call" size={20} color='rgb(0,0,0)' /> 999999999</Text>
                 </View>
-                <View style = {styles.lineStyle}></View>
-               
+                <Divider style={styles.lineStyle} />
                <View style={styles.messageBox}>
                     <Text style={styles.message}>
-                        Hi, I would like to visit your property between {item.meet_time} - {item.meet_time}.
+                        Hi, I would like to visit your property between {item.start_time} - {item.end_time}.
                     </Text>
                     <Text style={styles.question}>
                         Are you available at this time ?

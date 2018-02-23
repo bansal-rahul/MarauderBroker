@@ -19,7 +19,7 @@ export default class Database {
     static getBid(uid,callback) {
         let bid = ""
         let pids = []
-        let userPath = '/brokers/' + uid
+        let userPath = '/broker/' + uid
         firebase.database().ref(userPath).once('value').then(
             function(snapshot) {
                 if(snapshot.val()) {
